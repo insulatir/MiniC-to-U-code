@@ -317,17 +317,8 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	public void exitReturn_stmt(MiniCParser.Return_stmtContext ctx) {
 		String stmt = "";
 		
-		// return 타입이 void인 경우
-		if(isVoidReturn(ctx)) {
-			stmt += "\t" + "return";
-		} 
-		// return 타입이 int인 경우
-		else {
-			// return 값
-			String returnExpr = newTexts.get(ctx.expr());
-			stmt += returnExpr 
-					+ "\t" + "ireturn";
-		}
+		// 반환 타입에 상관없이 모두 'ret'
+		stmt += "\t" + "ret";
 		
 		newTexts.put(ctx, stmt);
 	}
