@@ -66,7 +66,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			symbolTable.putLocalVar(getLocalVarName(ctx), Type.INT);
 		}	
 	}
-
+	
 	@Override
 	public void exitProgram(MiniCParser.ProgramContext ctx) {
 		// 공통의 초기 상태
@@ -212,6 +212,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// 전역변수 이름
 		String varName = ctx.IDENT().getText();
 		String varDecl = "";
+		VarInfo varInfo = symbolTable.getVarInfo(varName);
+		
+		varDecl += printSymbol(varInfo);
 		
 		if (isDeclWithInit(ctx)) {
 			varDecl += "putfield " + varName + "\n";  
@@ -223,6 +226,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	@Override
 	public void exitLocal_decl(MiniCParser.Local_declContext ctx) {
 		String varDecl = "";
+		VarInfo varInfo = symbolTable.getVarInfo(ctx.IDENT().getText());
+		
+		varDecl += printSymbol(varInfo);
 		
 		// 지역변수가 초기값을 가지고 있는 경우
 		if (isDeclWithInit(ctx)) {
@@ -235,6 +241,10 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		}
 		
 		newTexts.put(ctx, varDecl);
+	}
+	
+	String printSymbol(VarInfo varInfo) {
+		return "\t" + "sym " + varInfo.block + " " + varInfo.id + " " + 1 + "\n"; 
 	}
 	
 	// compound_stmt : '{' local_decl* stmt* '}'
