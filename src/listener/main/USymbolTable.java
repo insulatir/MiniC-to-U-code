@@ -115,7 +115,7 @@ public class USymbolTable {
 	}
 	
 	// 함수테이블에 함수정보 저장
-	String putFunName(MiniCParser.Fun_declContext ctx) {
+	String putFunInfo(MiniCParser.Fun_declContext ctx) {
 		FInfo finfo = new FInfo();
 		String fname = "";
 		
