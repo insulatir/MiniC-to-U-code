@@ -31,17 +31,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		String fname = getFunName(ctx);
 		ParamsContext params;
 		
-		// main 함수
-		if (fname.equals("main")) {
-			// 심볼테이블에 'String[] args' 추가
-			symbolTable.putLocalVar("args", Type.INTARRAY);
-		// main을 제외한 함수
-		} else {
-			
-			params = (MiniCParser.ParamsContext) ctx.getChild(3);
-			// 심볼테이블에 인자들 추가
-			symbolTable.putParams(params);
-		}		
+		params = (MiniCParser.ParamsContext) ctx.getChild(3);
+		// 심볼테이블에 인자들 추가
+		symbolTable.putParams(params);	
 	}
 	
 	// var_decl	: type_spec IDENT ';' | type_spec IDENT '=' LITERAL ';'| type_spec IDENT '[' LITERAL ']' ';'
