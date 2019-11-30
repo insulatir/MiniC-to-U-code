@@ -16,16 +16,19 @@ public class USymbolTable {
 	
 	static public class VarInfo {
 		Type type; 
+		int block;
 		int id;
 		int initVal;
 		
-		public VarInfo(Type type, int id, int initVal) {
+		public VarInfo(Type type, int block, int id, int initVal) {
 			this.type = type;
+			this.block = block;
 			this.id = id;
 			this.initVal = initVal;
 		}
-		public VarInfo(Type type, int id) {
+		public VarInfo(Type type, int block, int id) {
 			this.type = type;
+			this.block = block;
 			this.id = id;
 			this.initVal = 0;
 		}
@@ -40,6 +43,7 @@ public class USymbolTable {
 	private Map<String, FInfo> _fsymtable = new HashMap<>();	// function 
 	
 		
+	private int _block = 0;
 	private int _globalVarID = 0;
 	private int _localVarID = 0;
 	private int _labelID = 0;
@@ -52,6 +56,8 @@ public class USymbolTable {
 	
 	void initFunDecl(){		// at each func decl
 		_lsymtable.clear();
+		// 함수 집입마다 블럭 번호 증가
+		_block++;
 		_localVarID = 0;
 		_labelID = 0;
 		_tempVarID = 32;		
@@ -59,27 +65,27 @@ public class USymbolTable {
 	
 	void putLocalVar(String varname, Type type){
 		// type, id를 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _localVarID++);
+		VarInfo varinfo = new VarInfo(type, _block, _localVarID++);
 		// 지역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_lsymtable.put(varname, varinfo);
 	}
 	
 	void putGlobalVar(String varname, Type type){
 		// type, id를 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _globalVarID++);
+		VarInfo varinfo = new VarInfo(type, _block, _globalVarID++);
 		// 전역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_gsymtable.put(varname, varinfo);
 	}
 	
 	void putLocalVarWithInitVal(String varname, Type type, int initVar){
 		// type, id와 초기값을 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _localVarID++, initVar);
+		VarInfo varinfo = new VarInfo(type, _block, _localVarID++, initVar);
 		// 지역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_lsymtable.put(varname, varinfo);
 	}
 	void putGlobalVarWithInitVal(String varname, Type type, int initVar){
 		// type, id와 초기값을 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _globalVarID++, initVar);
+		VarInfo varinfo = new VarInfo(type, _block, _globalVarID++, initVar);
 		// 전역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_gsymtable.put(varname, varinfo);
 	}
