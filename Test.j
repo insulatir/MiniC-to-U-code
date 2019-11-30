@@ -2,9 +2,7 @@
 	ldp
 	call main
 	end
-.method public static func(I)I
-	.limit stack 32
-	.limit locals 32
+func	proc 2 2
 	ldc 0
 	istore_1
 	iload_0 
@@ -37,15 +35,12 @@
 	label9:
 	iload_1 
 	ireturn
-.end method
-.method public static main([Ljava/lang/String;)V
-	.limit stack 32
-	.limit locals 32
+	end
+main	proc 3 2
 	ldc 100
 	istore_1
-	getstatic java/lang/System/out Ljava/io/PrintStream; 
 	iload_1 
-	invokestatic Test/func(I)I
-	invokevirtual java/io/PrintStream/println(I)V
+	call listener.main.USymbolTable$FInfo@39ed3c8d
+	call null
 	return
-.end method
+	end
