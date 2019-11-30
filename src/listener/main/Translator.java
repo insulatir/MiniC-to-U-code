@@ -44,9 +44,9 @@ public class Translator {
 			case BYTECODEGEN:
 				walker.walk(new BytecodeGenListener(), tree );
 				break;
-//			case UCODEGEN:
-//				walker.walk(new UCodeGenListener(), tree );
-//				break;
+			case UCODEGEN:
+				walker.walk(new UCodeGenListener(), tree );
+				break;
 			default:
 				break;
 		}
