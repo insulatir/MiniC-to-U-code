@@ -11,7 +11,7 @@ public class Translator {
 	}
 	private static OPTIONS getOption(String[] args){
 		if (args.length < 1)
-			return OPTIONS.BYTECODEGEN;
+			return OPTIONS.UCODEGEN;
 		
 		if (args[0].startsWith("-p") 
 				|| args[0].startsWith("-P"))

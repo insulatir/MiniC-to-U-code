@@ -1,10 +1,7 @@
-.class public Test
-.super java/lang/Object
-.method public <init>()V
-	aload_0
-	invokenonvirtual java/lang/Object/<init>()V
-	return
-.end method
+	bgn 0
+	ldp
+	call main
+	end
 .method public static func(I)I
 	.limit stack 32
 	.limit locals 32
