@@ -523,13 +523,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// 함수 이름
 		String fname = getFunName(ctx);		
 
-		if (fname.equals("_print")) {		// System.out.println	
-			expr = newTexts.get(ctx.args()) 
-			  		+ "\t" + "call " + symbolTable.getFunInfo("_print") + "\n";
-		} else {							// println이 아닌 함수
-			expr = newTexts.get(ctx.args()) 
-					+ "\t" + "invokestatic " + getCurrentClassName()+ "/" + symbolTable.getFunSpecStr(fname) + "\n";
-		}	
+		// call function
+		expr = newTexts.get(ctx.args()) 
+		  		+ "\t" + "call " + symbolTable.getFunInfo(fname) + "\n";
 		
 		return expr;
 	}
