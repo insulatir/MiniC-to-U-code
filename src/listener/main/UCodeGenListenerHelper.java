@@ -146,7 +146,7 @@ public class UCodeGenListenerHelper {
 		// return문이 존재하지 않는 함수
 		} else {
 			// 'return' 반환
-			return "\t" + "return" + "\n";
+			return "\t" + "ret" + "\n";
 		}
 	}
 	
