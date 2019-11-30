@@ -49,10 +49,9 @@ public class USymbolTable {
 	private int _globalVarID = 0;
 	private int _localVarID = 0;
 	private int _labelID = 0;
-	private int _tempVarID = 0;
+	private int _tempVarID = 32;
 	
 	USymbolTable(){
-		initFunDecl();
 		initFunTable();
 	}
 	
