@@ -205,7 +205,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// 리턴 존재 여부 판별
 		decl += noReturn(ctx);
 		// 함수의 끝
-		decl += ".end method" + "\n";
+		decl += "\t" + "end" + "\n";
 		
 		newTexts.put(ctx, decl);
 	}
