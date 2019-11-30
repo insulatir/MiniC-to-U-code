@@ -111,6 +111,11 @@ public class USymbolTable {
 		_fsymtable.put("write", printlninfo);
 	}
 	
+	// 함수 정보
+	FInfo getFunInfo(MiniCParser.Fun_declContext ctx) {
+		return _fsymtable.get(ctx.IDENT().getText());
+	}
+	
 	// 함수테이블에 함수정보 저장
 	String putFunInfo(MiniCParser.Fun_declContext ctx) {
 		FInfo finfo = new FInfo();
