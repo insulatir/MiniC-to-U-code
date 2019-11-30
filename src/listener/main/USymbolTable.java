@@ -64,6 +64,22 @@ public class USymbolTable {
 		_tempVarID = 32;		
 	}
 	
+	VarInfo getVarInfo(String varname) {
+		VarInfo varInfo;
+		
+		varInfo = _lsymtable.get(varname);
+		if (varInfo != null) {
+			return varInfo;
+		}
+		
+		varInfo = _gsymtable.get(varname);
+		if (varInfo != null) {
+			return varInfo;
+		}
+		
+		return null;
+	}
+	
 	void putLocalVar(String varname, Type type){
 		// type, id를 가지고 변수정보 생성
 		VarInfo varinfo = new VarInfo(type, _block, _localVarID++);
