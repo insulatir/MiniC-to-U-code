@@ -108,6 +108,19 @@ public class USymbolTable {
 		_fsymtable.put("main", maininfo);
 	}
 	
+	// 함수테이블에 함수정보 저장
+	String putFunName(MiniCParser.Fun_declContext ctx) {
+		FInfo finfo = new FInfo();
+		String fname = "";
+		
+		fname = ctx.IDENT().getText();
+		finfo.sigStr = fname;
+		
+		_fsymtable.put(fname, finfo);
+		
+		return fname;
+	}
+	
 	String getVarId(String name){
 		// 이름을 가지고 지역변수테이블에서 지역변수정보 탐색
 		VarInfo lvar = (VarInfo) _lsymtable.get(name);

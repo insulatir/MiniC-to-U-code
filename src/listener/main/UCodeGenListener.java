@@ -38,7 +38,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// main을 제외한 함수
 		} else {
 			// 심볼테이블에 함수 spec 추가 
-			symbolTable.putFunSpecStr(ctx);
+			symbolTable.putFunName(ctx);
 			params = (MiniCParser.ParamsContext) ctx.getChild(3);
 			// 심볼테이블에 인자들 추가
 			symbolTable.putParams(params);
