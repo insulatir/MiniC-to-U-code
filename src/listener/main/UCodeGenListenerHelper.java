@@ -125,14 +125,11 @@ public class UCodeGenListenerHelper {
 	}
 	
 	static String getFunProlog() {
-		// 처음 시작 부분은 언제나 동일 (단, 클래스 이름은 Test)
-		return ".class public Test\n"
-				+ ".super java/lang/Object\n"
-				+ ".method public <init>()V\n"
-				+ "\t" + "aload_0\n"
-				+ "\t" + "invokenonvirtual java/lang/Object/<init>()V\n"
-				+ "\t" + "return\n"
-				+ ".end method\n";
+		// 처음 시작 부분
+		return "\t" + "bgn " + 0 + "\n"
+				+ "\t" + "ldp" + "\n"
+				+ "\t" + "call main" + "\n"
+				+ "\t" + "end" + "\n";
 	}
 	
 	static String getCurrentClassName() {
