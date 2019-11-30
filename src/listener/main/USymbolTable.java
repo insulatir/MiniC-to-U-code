@@ -98,12 +98,12 @@ public class USymbolTable {
 	private void initFunTable() {
 		// println 함수정보
 		FInfo printlninfo = new FInfo();
-		printlninfo.sigStr = "java/io/PrintStream/println(I)V";
+		printlninfo.sigStr = "write";
 		// main 함수정보
 		FInfo maininfo = new FInfo();
-		maininfo.sigStr = "main([Ljava/lang/String;)V";
-		// 함수테이블에 println은 "_print"라는 이름을 가지게 하여 추가
-		_fsymtable.put("_print", printlninfo);
+		maininfo.sigStr = "main";
+		// 함수테이블에 println은 "write"라는 이름을 가지게 하여 추가
+		_fsymtable.put("write", printlninfo);
 		// 함수테이블에 main은 "main"라는 이름을 가지게 하여 추가 
 		_fsymtable.put("main", maininfo);
 	}
