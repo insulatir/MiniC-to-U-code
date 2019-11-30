@@ -37,8 +37,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			symbolTable.putLocalVar("args", Type.INTARRAY);
 		// main을 제외한 함수
 		} else {
-			// 심볼테이블에 함수 spec 추가 
-			symbolTable.putFunName(ctx);
+			
 			params = (MiniCParser.ParamsContext) ctx.getChild(3);
 			// 심볼테이블에 인자들 추가
 			symbolTable.putParams(params);
@@ -213,10 +212,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 
 	// 함수 시작 부분
 	private String funcHeader(MiniCParser.Fun_declContext ctx, String fname) {
-		// public static 메소드 
-		return ".method public static " + symbolTable.getFunSpecStr(fname) + "\n"	
-				+ "\t" + ".limit stack " 	+ getStackSize(ctx) + "\n"
-				+ "\t" + ".limit locals " 	+ getLocalVarSize(ctx) + "\n";
+		FInfo fInfo = symbolTable.getFunInfo(ctx);
+		
+		return fname + "\t" + "proc " + fInfo.block + " " + fInfo.local + "\n";	
 	}
 	
 	@Override
@@ -260,6 +258,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				stmt += newTexts.get(ctx.local_decl(i)) + "\n";
 			}
 		}
+		
 		// 문장 추가
 		if (ctx.stmt() != null) {
 			for (int i = 0; i < ctx.stmt().size(); i++) {
