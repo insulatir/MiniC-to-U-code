@@ -108,55 +108,6 @@ public class USymbolTable {
 		_fsymtable.put("main", maininfo);
 	}
 	
-	public String getFunSpecStr(String fname) {		
-		String res = "";
-		
-		FInfo finfo = new FInfo();
-		// 함수테이블에서 함수이름에 해당하는 함수정보
-		finfo = _fsymtable.get(fname);
-		// 함수의 spec
-		res = finfo.sigStr;
-		
-		return res;
-	}
-
-	public String getFunSpecStr(Fun_declContext ctx) {
-		// 함수 이름
-		String fname = getFunName(ctx);
-		String res = "";
-		
-		FInfo finfo = new FInfo();
-		// 함수테이블에서 함수이름에 해당하는 함수정보
-		finfo = _fsymtable.get(fname);
-		// 함수의 spec
-		res = finfo.sigStr;
-		
-		return res;
-	}
-	
-	public String putFunSpecStr(Fun_declContext ctx) {
-		// 함수 이름
-		String fname = getFunName(ctx);
-		String argtype = "";	
-		String rtype = "";
-		String res = "";
-		
-		// 인자들의 타입
-		argtype = getParamTypesText(ctx.params());
-		// 리턴 타입
-		rtype = getTypeText(ctx.type_spec());
-		// 바이트 코드 형식의 함수 spec
-		res =  fname + "(" + argtype + ")" + rtype;
-		
-		FInfo finfo = new FInfo();
-		// 함수 정보에 함수 spec 저장
-		finfo.sigStr = res;
-		// 함수테이블에 함수 이름과 함수 정보를 쌍으로 하여 추가
-		_fsymtable.put(fname, finfo);
-		
-		return res;
-	}
-	
 	String getVarId(String name){
 		// 이름을 가지고 지역변수테이블에서 지역변수정보 탐색
 		VarInfo lvar = (VarInfo) _lsymtable.get(name);
