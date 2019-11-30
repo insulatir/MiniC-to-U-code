@@ -259,6 +259,10 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			}
 		}
 		
+		// 심볼테이블에 함수 정보 추가 
+		// 스택 최적화
+		symbolTable.putFunInfo((MiniCParser.Fun_declContext) ctx.parent);
+		
 		// 문장 추가
 		if (ctx.stmt() != null) {
 			for (int i = 0; i < ctx.stmt().size(); i++) {
