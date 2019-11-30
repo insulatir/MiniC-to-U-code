@@ -112,8 +112,8 @@ public class USymbolTable {
 	}
 	
 	// 함수 정보
-	FInfo getFunInfo(MiniCParser.Fun_declContext ctx) {
-		return _fsymtable.get(ctx.IDENT().getText());
+	FInfo getFunInfo(String fname) {
+		return _fsymtable.get(fname);
 	}
 	
 	// 함수테이블에 함수정보 저장

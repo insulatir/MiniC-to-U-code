@@ -212,7 +212,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 
 	// 함수 시작 부분
 	private String funcHeader(MiniCParser.Fun_declContext ctx, String fname) {
-		FInfo fInfo = symbolTable.getFunInfo(ctx);
+		FInfo fInfo = symbolTable.getFunInfo(fname);
 		
 		return fname + "\t" + "proc " + fInfo.block + " " + fInfo.local + "\n";	
 	}
@@ -524,9 +524,8 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		String fname = getFunName(ctx);		
 
 		if (fname.equals("_print")) {		// System.out.println	
-			expr = "\t" + "getstatic java/lang/System/out Ljava/io/PrintStream; " + "\n"
-			  		+ newTexts.get(ctx.args()) 
-			  		+ "\t" + "invokevirtual " + symbolTable.getFunSpecStr("_print") + "\n";
+			expr = newTexts.get(ctx.args()) 
+			  		+ "\t" + "call " + symbolTable.getFunInfo("_print") + "\n";
 		} else {							// println이 아닌 함수
 			expr = newTexts.get(ctx.args()) 
 					+ "\t" + "invokestatic " + getCurrentClassName()+ "/" + symbolTable.getFunSpecStr(fname) + "\n";
