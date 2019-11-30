@@ -36,6 +36,8 @@ public class USymbolTable {
 	
 	static public class FInfo {
 		public String sigStr;
+		public int block;
+		public int local;
 	}
 	
 	private Map<String, VarInfo> _lsymtable = new HashMap<>();	// local v.
@@ -121,6 +123,8 @@ public class USymbolTable {
 		
 		fname = ctx.IDENT().getText();
 		finfo.sigStr = fname;
+		finfo.block = _block;
+		finfo.local = _localVarID;
 		
 		_fsymtable.put(fname, finfo);
 		
