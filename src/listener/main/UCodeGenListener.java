@@ -169,14 +169,14 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// end 라벨
 		String lend = symbolTable.newLabel();
 		
-		stmt = "\t" + lwhile + ":" + "\n"
+		stmt = lwhile + "\t" + "nop" + "\n"
 				+ condExpr + "\n"
 				// ifeq인 이유 : condExpr 실행 시 참이면 1이고 거짓이면 0인데 
 				// ifeq는 이것을 0과 비교하기 때문에 거짓인 0과 같아야 while을 빠져나오기 때문
-				+ "\t" + "ifeq " + lend + "\n"
+				+ "\t" + "fjp " + lend + "\n"
 				+ thenStmt + "\n"
-				+ "\t" + "goto " + lwhile + "\n"
-				+ "\t" + lend + ":" + "\n";
+				+ "\t" + "ujp " + lwhile + "\n"
+				+ lend + "\t" + "nop" + "\n";
 		
 		newTexts.put(ctx, stmt);
 	}
