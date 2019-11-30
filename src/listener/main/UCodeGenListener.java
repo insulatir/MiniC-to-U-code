@@ -524,10 +524,15 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	private String handleFunCall(MiniCParser.ExprContext ctx, String expr) {
 		// 함수 이름
 		String fname = getFunName(ctx);		
+		
+		// '_print'이면 'write'로 변환
+		if (fname.equals("_print")) {
+			fname = "write";
+		}
 
 		// call function
 		expr = newTexts.get(ctx.args()) 
-		  		+ "\t" + "call " + symbolTable.getFunInfo(fname) + "\n";
+		  		+ "\t" + "call " + fname + "\n";
 		
 		return expr;
 	}
