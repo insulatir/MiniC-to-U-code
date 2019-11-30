@@ -69,36 +69,11 @@ public class UCodeGenListenerHelper {
 	static String getLocalVarSize(Fun_declContext ctx) {
 		return "32";
 	}
-	static String getTypeText(Type_specContext typespec) {
-		// int type
-		if (typespec.getText().equals("int")) {
-			// 'I' 반환
-			return "I";
-		// void type
-		} else if (typespec.getText().equals("void")) {
-			// 'V' 반환
-			return "V";
-		}
-		
-		return "";
-	}
 
 	// params
 	static String getParamName(ParamContext param) {
 		// 인자 이름
 		return param.IDENT().getText();
-	}
-	
-	static String getParamTypesText(ParamsContext params) {
-		String typeText = "";
-		
-		for(int i = 0; i < params.param().size(); i++) {
-			MiniCParser.Type_specContext typespec = (MiniCParser.Type_specContext)  params.param(i).getChild(0);
-			// 인자 타입
-			typeText += getTypeText(typespec); // + ";";
-		}
-		// 인자들 타입 반환
-		return typeText;
 	}
 	
 	static String getLocalVarName(Local_declContext local_decl) {
