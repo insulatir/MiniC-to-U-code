@@ -2,7 +2,7 @@
 	ldp
 	call main
 	end
-func	proc 2 2
+func	proc 1 2
 	ldc 0
 	istore_1
 	iload_0 
@@ -36,7 +36,7 @@ func	proc 2 2
 	iload_1 
 	ireturn
 	end
-main	proc 3 2
+main	proc 2 2
 	ldc 100
 	istore_1
 	iload_1 

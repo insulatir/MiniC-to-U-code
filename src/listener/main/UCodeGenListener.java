@@ -104,17 +104,17 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// 트리에 최종 문장 추가
 		newTexts.put(ctx, program);
 		
-		// 'Test.j' 파일
-		File file = new File("Test.j");
-		
-		try {
-			FileWriter fw = new FileWriter(file);
-			// 'Test.j' 파일에 program 쓰기
-			fw.write(newTexts.get(ctx));
-			fw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		// 'Test.j' 파일
+//		File file = new File("Test.j");
+//		
+//		try {
+//			FileWriter fw = new FileWriter(file);
+//			// 'Test.j' 파일에 program 쓰기
+//			fw.write(newTexts.get(ctx));
+//			fw.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		// program 출력
 		System.out.println(newTexts.get(ctx));
