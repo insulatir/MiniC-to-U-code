@@ -27,8 +27,6 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// 심볼테이블 초기화
 		symbolTable.initFunDecl();
 		
-		// 함수 이름
-		String fname = getFunName(ctx);
 		ParamsContext params;
 		
 		params = (MiniCParser.ParamsContext) ctx.getChild(3);
