@@ -380,35 +380,26 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	}
 
 	private String handleUnaryExpr(MiniCParser.ExprContext ctx, String expr) {
-		String l1 = symbolTable.newLabel();
-		String l2 = symbolTable.newLabel();
-		String lend = symbolTable.newLabel();
+		String varName = ctx.getChild(1).getText();
+		VarInfo vInfo = symbolTable.getVarInfo(varName);
 		
 		expr += newTexts.get(ctx.expr(0));
 		switch(ctx.getChild(0).getText()) {
 		case "-":
-			expr += "\t" + "ineg" + "\n"; 
+			expr += "\t" + "neg" + "\n"; 
 			break;
 		case "--":
 			expr += "\t" + "ldc 1" + "\n"
-					+ "\t" + "isub" + "\n"
-					+ "\t" + "istore_" + symbolTable.getVarId(ctx.getChild(1).getText()) + "\n";
+					+ "\t" + "sub" + "\n"
+					+ "\t" + "str " + vInfo.block + " " + vInfo.id + " \n";
 			break;
 		case "++":
 			expr += "\t" + "ldc 1" + "\n"
-					+ "\t" + "iadd" + "\n"
-					+ "\t" + "istore_" + symbolTable.getVarId(ctx.getChild(1).getText()) + "\n";
+					+ "\t" + "add" + "\n"
+					+ "\t" + "str " + vInfo.block + " " + vInfo.id + " \n";
 			break;
 		case "!":
-			expr += "\t" + "ifeq " + l2 + "\n"
-					+ "\t" + l1 + ":" + "\n" 
-					// 거짓
-					+ "\t" + "ldc 0" + "\n"
-					+ "\t" + "goto " + lend + "\n"
-					+ "\t" + l2 + ":" + "\n" 
-					// 참
-					+ "\t" + "ldc 1" + "\n"
-					+ "\t" + lend + ":" + "\n";
+			expr += "\t" + "not" + "\n";
 			break;
 		}
 		return expr;
