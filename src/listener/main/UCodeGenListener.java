@@ -374,8 +374,12 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			} else if(ctx.getChild(1).getText().equals("=")) { 	// IDENT '=' expr
 				String varName = ctx.IDENT().getText();
 				VarInfo vInfo = symbolTable.getVarInfo(varName);
-				expr = newTexts.get(ctx.expr(0)) 
-						+ "\t" + "str " + vInfo.block + " " + vInfo.id + " \n";
+				expr = newTexts.get(ctx.expr(0));
+				// 다중 할당 시 복사를 해 놓아야 함
+				if (ctx.parent.getChild(1).getText().equals("=")) {
+					expr += "\t" + "dup" + "\n";
+				}
+				expr += "\t" + "str " + vInfo.block + " " + vInfo.id + " \n";
 			} else { 											// binary operation
 				expr = handleBinExpr(ctx, expr);
 			}
