@@ -407,102 +407,47 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 
 
 	private String handleBinExpr(MiniCParser.ExprContext ctx, String expr) {
-		String l2 = symbolTable.newLabel();
-		String lend = symbolTable.newLabel();
-		
 		expr += newTexts.get(ctx.expr(0));
 		expr += newTexts.get(ctx.expr(1));
 		
 		switch (ctx.getChild(1).getText()) {
 			case "*":		// expr(0) expr(1) imul
-				expr += "\t" + "imul" + "\n"; break;
+				expr += "\t" + "mult" + "\n"; break;
 			case "/":		// expr(0) expr(1) idiv
-				expr += "\t" + "idiv" + "\n"; break;
+				expr += "\t" + "div" + "\n"; break;
 			case "%":		// expr(0) expr(1) irem
-				expr += "\t" + "irem" + "\n"; break;
+				expr += "\t" + "mod" + "\n"; break;
 			case "+":		// expr(0) expr(1) iadd
-				expr += "\t" + "iadd" + "\n"; break;
+				expr += "\t" + "add" + "\n"; break;
 			case "-":		// expr(0) expr(1) isub
-				expr += "\t" + "isub" + "\n"; break;
+				expr += "\t" + "sub" + "\n"; break;
 				
 			case "==":
-				expr += "\t" + "isub " + "\n"
-						// 'a == 0'면 참
-						+ "\t" + "ifeq " + l2 + "\n"
-						// 거짓
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ":" + "\n"
-						// 참
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ":" + "\n";
+				expr += "\t" + "eq" + "\n";
 				break;
 			case "!=":
-				expr += "\t" + "isub " + "\n"
-						// 'a != 0'면 참
-						+ "\t" + "ifne " + l2 + "\n"
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ":" + "\n" 
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ":" + "\n";
+				expr += "\t" + "ne" + "\n";
 				break;
 			case "<=":
-				expr += "\t" + "isub " + "\n"
-						// 'a <= 0'면 참
-						+ "\t" + "ifle " + l2 + "\n"
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ":" + "\n" 
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ":" + "\n";
+				expr += "\t" + "ge" + "\n";
 				break;
 			case "<":
-				expr += "\t" + "isub " + "\n"
-						// 'a < 0'면 참
-						+ "\t" + "iflt " + l2 + "\n"
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ":" + "\n" 
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ":" + "\n";
+				expr += "\t" + "lt" + "\n";
 				break;
 
 			case ">=":
-				expr += "\t" + "isub " + "\n"
-						// 'a >= 0'면 참
-						+ "\t" + "ifge " + l2 + "\n"
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ":" + "\n" 
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ":" + "\n";
+				expr += "\t" + "ge" + "\n";
 				break;
 
 			case ">":
-				expr += "\t" + "isub " + "\n"
-						// 'a > 0'면 참
-						+ "\t" + "ifgt " + l2 + "\n"
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + "goto " + lend + "\n"
-						+ "\t" + l2 + ": " + "\n" 
-						+ "\t" + "ldc 1" + "\n"
-						+ "\t" + lend + ": " + "\n";
+				expr += "\t" + "gt" + "\n";
 				break;
 
 			case "and":
-						// 거짓이면 바로 빠져나옴
-				expr +=  "\t" + "ifne "+ lend + "\n"
-						+ "\t" + "pop" + "\n" 
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + lend + ": " + "\n"; 
+				expr += "\t" + "and" + "\n";
 				break;
 			case "or":
-						// 참이면 바로 빠져나옴
-				expr +=  "\t" + "ifeq "+ lend + "\n"
-						+ "\t" + "pop" + "\n" 
-						+ "\t" + "ldc 0" + "\n"
-						+ "\t" + lend + ": " + "\n";
+				expr += "\t" + "or" + "\n";
 				break;
 
 		}
