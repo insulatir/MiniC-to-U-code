@@ -213,6 +213,14 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			i += 1;
 		}
 		
+		i -= 1;
+		while (ctx.params().param(i) != null) {
+			varname = ctx.params().param(i).IDENT().getText();
+			vInfo = symbolTable.getVarInfo(varname);
+			header += "\t" + "str" + " " + vInfo.block + " " + vInfo.id + "\n";
+			i -= 1;
+		}
+		
 		header = fname + "\t" + "proc " + fInfo.block + " " + fInfo.local + "\n" + header;	
 		return header;
 	}
