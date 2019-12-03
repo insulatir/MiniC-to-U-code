@@ -202,10 +202,13 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	private String funcHeader(MiniCParser.Fun_declContext ctx, String fname) {
 		String header = "";
 		FInfo fInfo = symbolTable.getFunInfo(fname);
+		VarInfo vInfo = null;
+		String varname = "";
+		
 		int i = 0;
 		while (ctx.params().param(i) != null) {
-			String varname = ctx.params().param(i).IDENT().getText();
-			VarInfo vInfo = symbolTable.getVarInfo(varname);
+			varname = ctx.params().param(i).IDENT().getText();
+			vInfo = symbolTable.getVarInfo(varname);
 			header += printSymbol(vInfo);
 			i += 1;
 		}
