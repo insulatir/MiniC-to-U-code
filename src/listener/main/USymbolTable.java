@@ -189,7 +189,7 @@ public class USymbolTable {
 	}
 	String newLabel() {
 		// 새로운 라벨 생성 후 _labelID 증가
-		return "label" + _labelID++;
+		return "$$" + _labelID++;
 	}
 	
 	String newTempVar() {
