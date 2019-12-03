@@ -232,12 +232,10 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		
 		// 지역변수가 초기값을 가지고 있는 경우
 		if (isDeclWithInit(ctx)) {
-			// 지역변수 id
-			String vId = symbolTable.getVarId(ctx);
 					// 초기값 스택 추가
 			varDecl += "\t" + "ldc " + ctx.LITERAL().getText() + "\n"
 					// 지역변수에 스택 값 저장
-					+ "\t" + "istore_" + vId + "\n"; 			
+					+ "\t" + "str " + varInfo.block + " " + varInfo.id + "\n"; 			
 		}
 		
 		newTexts.put(ctx, varDecl);
