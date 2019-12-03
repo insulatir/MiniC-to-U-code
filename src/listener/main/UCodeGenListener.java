@@ -297,21 +297,21 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// else가 없는 경우
 		if(noElse(ctx)) {		
 			stmt += condExpr + "\n"
-				+ "\t" + "ifeq " + lend + "\n"
+				+ "\t" + "fjp " + lend + "\n"
 				+ thenStmt + "\n"
-				+ "\t" + lend + ":" + "\n";	
+				+ lend + "\t" + "nop" + "\n";	
 		}
 		// else가 있는 경우
 		else {
 			// else 실행문
 			String elseStmt = newTexts.get(ctx.stmt(1));
 			stmt += condExpr + "\n"
-					+ "\t" + "ifeq " + lelse + "\n"
+					+ "\t" + "fjp " + lelse + "\n"
 					+ thenStmt + "\n"
-					+ "\t" + "goto " + lend + "\n"
-					+ "\t" + lelse + ":" + "\n" 
+					+ "\t" + "ujp " + lend + "\n"
+					+ lelse + "\t" + "nop" + "\n" 
 					+ elseStmt + "\n"
-					+ "\t" + lend + ":" + "\n";	
+					+ lend + "\t" + "nop" + "\n";	
 		}
 		
 		newTexts.put(ctx, stmt);
