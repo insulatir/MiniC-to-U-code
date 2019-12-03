@@ -340,11 +340,9 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		if(ctx.getChildCount() == 1) { // IDENT | LITERAL
 			// IDENT인 경우
 			if(ctx.IDENT() != null) {
-				String idName = ctx.IDENT().getText();
-				// 변수타입이 int인 경우
-				if(symbolTable.getVarType(idName) == Type.INT) {
-					expr += "\t" + "iload_" + symbolTable.getVarId(idName) + " \n";
-				}
+				String varName = ctx.IDENT().getText();
+				VarInfo vInfo = symbolTable.getVarInfo(varName);
+				expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + " \n";
 				//else	// Type int array => Later! skip now..
 				//	expr += "           lda " + symbolTable.get(ctx.IDENT().getText()).value + " \n";
 			// LITERAL인 경우
@@ -359,8 +357,10 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			if(ctx.getChild(0).getText().equals("(")) { 		// '(' expr ')'
 				expr = newTexts.get(ctx.expr(0));
 			} else if(ctx.getChild(1).getText().equals("=")) { 	// IDENT '=' expr
-				expr = newTexts.get(ctx.expr(0))
-						+ "\t" + "istore_" + symbolTable.getVarId(ctx.IDENT().getText()) + "\n";
+				String varName = ctx.IDENT().getText();
+				VarInfo vInfo = symbolTable.getVarInfo(varName);
+				expr = newTexts.get(ctx.expr(0)) 
+						+ "\t" + "lod " + vInfo.block + " " + vInfo.id + " \n";
 			} else { 											// binary operation
 				expr = handleBinExpr(ctx, expr);
 			}
