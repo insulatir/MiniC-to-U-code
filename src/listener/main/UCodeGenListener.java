@@ -360,7 +360,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				String varName = ctx.IDENT().getText();
 				VarInfo vInfo = symbolTable.getVarInfo(varName);
 				expr = newTexts.get(ctx.expr(0)) 
-						+ "\t" + "lod " + vInfo.block + " " + vInfo.id + " \n";
+						+ "\t" + "str " + vInfo.block + " " + vInfo.id + " \n";
 			} else { 											// binary operation
 				expr = handleBinExpr(ctx, expr);
 			}
