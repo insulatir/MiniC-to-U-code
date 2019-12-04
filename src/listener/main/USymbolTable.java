@@ -64,6 +64,10 @@ public class USymbolTable {
 		_tempVarID = 32;		
 	}
 	
+	int getGlobalCount() {
+		return _globalVarID;
+	}
+	
 	VarInfo getVarInfo(String varname) {
 		VarInfo varInfo;
 		
