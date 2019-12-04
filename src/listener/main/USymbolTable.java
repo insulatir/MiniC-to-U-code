@@ -156,6 +156,15 @@ public class USymbolTable {
 		_fsymtable.put("main", maininfo);
 	}
 	
+	boolean hasArray(MiniCParser.ParamsContext ctx) {
+		for (int i = 0; i < ctx.param().size(); i++) {
+			if (isArrayParamDecl(ctx.param(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// 함수 정보
 	FInfo getFunInfo(String fname) {
 		return _fsymtable.get(fname);
@@ -170,6 +179,7 @@ public class USymbolTable {
 		finfo.sigStr = fname;
 		finfo.block = _block;
 		finfo.local = _localVarID;
+		finfo.hasArray = hasArray(ctx.params());
 		
 		_fsymtable.put(fname, finfo);
 		
