@@ -91,14 +91,6 @@ public class UCodeGenListenerHelper {
 		return ctx.getChildCount() <= 5;
 	}
 	
-	static String getFunProlog() {
-		// 처음 시작 부분
-		return "\t" + "bgn " + 0 + "\n"
-				+ "\t" + "ldp" + "\n"
-				+ "\t" + "call main" + "\n"
-				+ "\t" + "end" + "\n";
-	}
-	
 	static String getCurrentClassName() {
 		// 현재 클래스 이름
 		return "Test";
