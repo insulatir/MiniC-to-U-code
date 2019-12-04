@@ -148,6 +148,12 @@ public class USymbolTable {
 		printlninfo.sigStr = "write";
 		// 함수테이블에 println은 "write"라는 이름을 가지게 하여 추가
 		_fsymtable.put("write", printlninfo);
+		
+		// main 함수정보
+		FInfo maininfo = new FInfo();
+		printlninfo.sigStr = "main";
+		// 함수테이블에 main은 "main"라는 이름을 가지게 하여 추가
+		_fsymtable.put("main", maininfo);
 	}
 	
 	// 함수 정보
