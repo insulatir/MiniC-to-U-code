@@ -19,17 +19,20 @@ public class USymbolTable {
 		int block;
 		int id;
 		int initVal;
+		int size;
 		
-		public VarInfo(Type type, int block, int id, int initVal) {
+		public VarInfo(Type type, int block, int id, int size, int initVal) {
 			this.type = type;
 			this.block = block;
 			this.id = id;
+			this.size = size;
 			this.initVal = initVal;
 		}
-		public VarInfo(Type type, int block, int id) {
+		public VarInfo(Type type, int block, int id, int size) {
 			this.type = type;
 			this.block = block;
 			this.id = id;
+			this.size = size;
 			this.initVal = 0;
 		}
 	}
@@ -86,16 +89,32 @@ public class USymbolTable {
 	
 	void putLocalVar(String varname, Type type){
 		// type, id를 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _block, _localVarID++);
+		VarInfo varinfo = new VarInfo(type, _block, _localVarID++, 1);
 		// 지역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_lsymtable.put(varname, varinfo);
 	}
 	
 	void putGlobalVar(String varname, Type type){
 		// type, id를 가지고 변수정보 생성
-		VarInfo varinfo = new VarInfo(type, _block, _globalVarID++);
+		VarInfo varinfo = new VarInfo(type, _block, _globalVarID++, 1);
 		// 전역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
 		_gsymtable.put(varname, varinfo);
+	}
+	
+	void putLocalVar(String varname, int size, Type type){
+		// type, id를 가지고 변수정보 생성
+		VarInfo varinfo = new VarInfo(type, _block, _localVarID, size);
+		// 지역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
+		_lsymtable.put(varname, varinfo);
+		_localVarID += size;
+	}
+	
+	void putGlobalVar(String varname, int size, Type type){
+		// type, id를 가지고 변수정보 생성
+		VarInfo varinfo = new VarInfo(type, _block, _globalVarID, size);
+		// 전역변수테이블에 변수이름과 변수정보를 쌍으로 하여 추가
+		_gsymtable.put(varname, varinfo);
+		_globalVarID += size;
 	}
 	
 	void putLocalVarWithInitVal(String varname, Type type, int initVar){
