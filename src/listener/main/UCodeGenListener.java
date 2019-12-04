@@ -74,6 +74,8 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		
 		String fun_decl = "", var_decl = "";
 		
+		String main_decl = "";
+		
 		String program = "";
 		
 		for(int i = 0; i < ctx.getChildCount(); i++) {
@@ -85,8 +87,12 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				var_decl += newTexts.get(ctx.decl(i));
 		}
 		
+		main_decl = "\t" + "ldp" + "\n" 
+					+ "\t" + "call " + "main" + "\n"
+					+ "\t" + "end" + "\n";
+		
 		// 최종 문장
-		program = classProlog + var_decl + fun_decl;
+		program = classProlog + var_decl + main_decl + fun_decl;
 		
 		// 빈 줄 삭제
 		program = deleteEmptyLines(program);
@@ -109,6 +115,11 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		// program 출력
 		System.out.println(newTexts.get(ctx));
 	}	
+	
+	public String getFunProlog() {
+		// 처음 시작 부분
+		return "\t" + "bgn " + symbolTable.getGlobalCount() + "\n";
+	}
 	
 	// decl	: var_decl | fun_decl
 	@Override
