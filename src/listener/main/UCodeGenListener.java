@@ -273,7 +273,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	}
 	
 	String printSymbol(VarInfo varInfo) {
-		return "\t" + "sym " + varInfo.block + " " + varInfo.id + " " + 1 + "\n"; 
+		return "\t" + "sym " + varInfo.block + " " + varInfo.id + " " + varInfo.size + "\n"; 
 	}
 	
 	// compound_stmt : '{' local_decl* stmt* '}'
