@@ -197,7 +197,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		
 		newTexts.put(ctx, decl);
 	}
-
+	
 	// 함수 시작 부분
 	private String funcHeader(MiniCParser.Fun_declContext ctx, String fname) {
 		String header = "";
@@ -235,8 +235,10 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		varDecl += printSymbol(varInfo);
 		
 		if (isDeclWithInit(ctx)) {
-			varDecl += "putfield " + varName + "\n";  
-			// v. initialization => Later! skip now..: 
+			// 초기값 스택 추가
+			varDecl += "\t" + "ldc " + ctx.LITERAL().getText() + "\n"
+					// 전역변수에 스택 값 저장
+					+ "\t" + "str " + varInfo.block + " " + varInfo.id + "\n";
 		}
 		newTexts.put(ctx, varDecl);
 	}
