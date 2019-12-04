@@ -1,0 +1,44 @@
+	bgn 1
+	sym 0 0 1
+	ldc 10
+	str 0 0
+	ldp
+	call main
+	end
+main	proc 1 3
+	sym 1 0 1
+	sym 1 1 1
+	sym 1 2 1
+	ldc 0 
+	dup
+	str 1 2 
+	str 1 0 
+$$0	nop
+	lod 1 0 
+	lod 0 0 
+	lt
+	fjp $$1
+	lod 1 2 
+	add
+	str 1 2 
+	lod 1 0 
+	inc
+	str 1 0 
+	ujp $$0
+$$1	nop
+	lod 1 2 
+	call write
+	ret
+	end
+sub	proc 2 3
+	sym 2 0 1
+	sym 2 1 1
+	str 2 1
+	str 2 0
+	sym 2 2 1
+	lod 2 2 
+	add
+	str 2 2 
+	lod 2 2 
+	retv
+	end
