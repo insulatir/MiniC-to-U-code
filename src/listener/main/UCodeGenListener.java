@@ -370,7 +370,11 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 			if(ctx.IDENT() != null) {
 				String varName = ctx.IDENT().getText();
 				VarInfo vInfo = symbolTable.getVarInfo(varName);
-				expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + " \n";
+				if (vInfo.type == Type.INT) {
+					expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + "\n";
+				} else {
+					expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+ 				}
 				//else	// Type int array => Later! skip now..
 				//	expr += "           lda " + symbolTable.get(ctx.IDENT().getText()).value + " \n";
 			// LITERAL인 경우
