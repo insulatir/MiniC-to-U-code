@@ -1,7 +1,9 @@
+int max = 100;
+
 int func(int t) {
    
    int sum = 0;
-   if((t==100)){
+   if((t==max)){
      while(sum <= 100){
          ++sum;
       }
