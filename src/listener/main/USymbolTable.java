@@ -41,6 +41,7 @@ public class USymbolTable {
 		public String sigStr;
 		public int block;
 		public int local;
+		public boolean hasArray;
 	}
 	
 	private Map<String, VarInfo> _lsymtable = new HashMap<>();	// local v.
