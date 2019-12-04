@@ -520,12 +520,19 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	@Override
 	public void exitArgs(MiniCParser.ArgsContext ctx) {
 		String argsStr = "\n";
+		// 함수 이름
+		String fname = ctx.parent.getChild(0).getText();
+		FInfo fInfo = symbolTable.getFunInfo(fname);
 		
 		argsStr += "\t" + "ldp" + "\n";
 		
 		for (int i=0; i < ctx.expr().size() ; i++) {
 			// 인자 추가
 			argsStr += newTexts.get(ctx.expr(i)) ; 
+			// 함수 인자가 배열 타입인 경우
+			if (ctx.expr(i).getChildCount() == 4) {
+				fInfo.hasArray = true;
+			}
 		}		
 
 		newTexts.put(ctx, argsStr);
