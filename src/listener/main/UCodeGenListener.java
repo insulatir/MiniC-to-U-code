@@ -41,7 +41,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		
 		// 전역변수가 배열 타입
 		if (isArrayDecl(ctx)) {
-			symbolTable.putGlobalVar(varName, Type.INTARRAY);
+			symbolTable.putGlobalVar(varName, Integer.parseInt(ctx.LITERAL().getText()), Type.INTARRAY);
 		}
 		// 전역변수가 초기값을 가짐
 		else if (isDeclWithInit(ctx)) {
@@ -56,7 +56,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	public void enterLocal_decl(MiniCParser.Local_declContext ctx) {
 		// 지역변수가 배열 타입
 		if (isArrayDecl(ctx)) {
-			symbolTable.putLocalVar(getLocalVarName(ctx), Type.INTARRAY);
+			symbolTable.putLocalVar(getLocalVarName(ctx), Integer.parseInt(ctx.LITERAL().getText()), Type.INTARRAY);
 		}
 		// 지역변수가 초기값을 가짐
 		else if (isDeclWithInit(ctx)) {
