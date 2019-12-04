@@ -511,6 +511,8 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	public void exitArgs(MiniCParser.ArgsContext ctx) {
 		String argsStr = "\n";
 		
+		argsStr += "\t" + "ldp" + "\n";
+		
 		for (int i=0; i < ctx.expr().size() ; i++) {
 			// 인자 추가
 			argsStr += newTexts.get(ctx.expr(i)) ; 
