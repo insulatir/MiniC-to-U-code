@@ -407,6 +407,13 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		}
 		// IDENT '[' expr ']' '=' expr
 		else { // Arrays: TODO			*/
+			String varName = ctx.IDENT().getText();
+			VarInfo vInfo = symbolTable.getVarInfo(varName);
+			expr = newTexts.get(ctx.expr(0));
+			expr += "\t" + "lda " +  vInfo.block + " " + vInfo.id + "\n";
+			expr += "\t" + "add" + "\n";
+			expr += newTexts.get(ctx.expr(1));
+			expr += "\t" + "sti" + "\n";
 		}
 		newTexts.put(ctx, expr);
 	}
