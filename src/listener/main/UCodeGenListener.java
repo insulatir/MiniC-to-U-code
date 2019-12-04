@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
@@ -32,6 +33,8 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		params = (MiniCParser.ParamsContext) ctx.getChild(3);
 		// 심볼테이블에 인자들 추가
 		symbolTable.putParams(params);	
+		// 심볼테이블에 함수 추가
+		symbolTable.putFunInfo(ctx);
 	}
 	
 	// var_decl	: type_spec IDENT ';' | type_spec IDENT '=' LITERAL ';'| type_spec IDENT '[' LITERAL ']' ';'
@@ -409,7 +412,22 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				String varName = ctx.IDENT().getText();
 				VarInfo vInfo = symbolTable.getVarInfo(varName);
 				expr = newTexts.get(ctx.expr(0));
-				expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+
+				// 함수 인자에 배열 타입이 있는지 확인
+				RuleContext fun = ctx;
+				while (!(fun instanceof MiniCParser.Fun_declContext)) {
+					fun = fun.parent;
+				}
+				
+				String fname = fun.getChild(1).getText();
+				FInfo fInfo = symbolTable.getFunInfo(fname);
+				
+				if (fInfo.hasArray) {
+					expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + "\n";
+				} else {
+					expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+				}
+				
 				expr += "\t" + "add" + "\n";
 				expr += "\t" + "ldi" + "\n";
 				// Arrays: TODO  
@@ -520,19 +538,12 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 	@Override
 	public void exitArgs(MiniCParser.ArgsContext ctx) {
 		String argsStr = "\n";
-		// 함수 이름
-		String fname = ctx.parent.getChild(0).getText();
-		FInfo fInfo = symbolTable.getFunInfo(fname);
 		
 		argsStr += "\t" + "ldp" + "\n";
 		
 		for (int i=0; i < ctx.expr().size() ; i++) {
 			// 인자 추가
 			argsStr += newTexts.get(ctx.expr(i)) ; 
-			// 함수 인자가 배열 타입인 경우
-			if (ctx.expr(i).getChildCount() == 4) {
-				fInfo.hasArray = true;
-			}
 		}		
 
 		newTexts.put(ctx, argsStr);
