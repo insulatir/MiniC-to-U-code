@@ -1,0 +1,196 @@
+	bgn 0
+	ldp
+	call main
+	end
+Swap	proc 1 4
+	sym 1 0 1
+	sym 1 1 1
+	sym 1 2 1
+	str 1 2
+	str 1 1
+	str 1 0
+	sym 1 3 1
+	lod 1 1
+	lod 1 0
+	add
+	ldi
+	str 1 3 
+	lod 1 1
+	lda 1 0
+	add
+	lod 1 2
+	lod 1 0
+	add
+	ldi
+	sti
+	lod 1 2
+	lda 1 0
+	add
+	lod 1 3
+	sti
+	ret
+	end
+Partition	proc 2 6
+	sym 2 0 1
+	sym 2 1 1
+	sym 2 2 1
+	str 2 2
+	str 2 1
+	str 2 0
+	sym 2 3 1
+	sym 2 4 1
+	sym 2 5 1
+	lod 2 1
+	lod 2 0
+	add
+	ldi
+	str 2 3 
+	lod 2 1
+	ldc 1 
+	add
+	str 2 4 
+	lod 2 2
+	str 2 5 
+$$6	nop
+	lod 2 4
+	lod 2 5
+	ge
+	fjp $$7
+$$0	nop
+	lod 2 3
+	lod 2 4
+	lod 2 0
+	add
+	ldi
+	gt
+	fjp $$1
+	lod 2 4
+	inc
+	str 2 4 
+	ujp $$0
+$$1	nop
+$$2	nop
+	lod 2 3
+	lod 2 5
+	lod 2 0
+	add
+	ldi
+	lt
+	fjp $$3
+	lod 2 5
+	dec
+	str 2 5 
+	ujp $$2
+$$3	nop
+	lod 2 4
+	lod 2 5
+	ge
+	fjp $$4
+	ldp
+	lod 2 0
+	lod 2 4
+	lod 2 5
+	call Swap
+$$4	nop
+	ujp $$6
+$$7	nop
+	ldp
+	lod 2 0
+	lod 2 1
+	lod 2 5
+	call Swap
+	lod 2 5
+	retv
+	end
+QuickSort	proc 3 4
+	sym 3 0 1
+	sym 3 1 1
+	sym 3 2 1
+	str 3 2
+	str 3 1
+	str 3 0
+	lod 3 1
+	lod 3 2
+	ge
+	fjp $$8
+	sym 3 3 1
+	ldp
+	lod 3 0
+	lod 3 1
+	lod 3 2
+	call Partition
+	str 3 3 
+	ldp
+	lod 3 0
+	lod 3 1
+	lod 3 3
+	ldc 1 
+	sub
+	call QuickSort
+	ldp
+	lod 3 0
+	lod 3 3
+	ldc 1 
+	add
+	lod 3 2
+	call QuickSort
+$$8	nop
+	ret
+	end
+main	proc 4 103
+	sym 4 0 100
+	sym 4 100 1
+	sym 4 101 1
+	sym 4 102 1
+	ldc 0 
+	str 4 101 
+	ldp
+	lod 4 100
+	call write
+$$10	nop
+	lod 4 100
+	ldc 0 
+	ne
+	fjp $$11
+	lod 4 101
+	lda 4 0
+	add
+	lod 4 100
+	sti
+	lod 4 101
+	inc
+	str 4 101 
+	ldp
+	lod 4 100
+	call write
+	ujp $$10
+$$11	nop
+	lod 4 101
+	str 4 102 
+	ldp
+	lda1 4 0
+	ldc 0 
+	lod 4 101
+	ldc 1 
+	sub
+	call QuickSort
+	ldc 0 
+	str 4 101 
+$$12	nop
+	lod 4 101
+	lod 4 102
+	lt
+	fjp $$13
+	ldp
+	lod 4 101
+	lda 4 0
+	add
+	ldi
+	call write
+	lod 4 101
+	inc
+	str 4 101 
+	ujp $$12
+$$13	nop
+	ret
+	end
