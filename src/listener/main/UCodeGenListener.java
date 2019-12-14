@@ -504,7 +504,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				expr += "\t" + "ne" + "\n";
 				break;
 			case "<=":
-				expr += "\t" + "ge" + "\n";
+				expr += "\t" + "le" + "\n";
 				break;
 			case "<":
 				expr += "\t" + "lt" + "\n";
