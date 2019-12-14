@@ -1,0 +1,53 @@
+	bgn 0
+	ldp
+	call main
+	end
+Fibo	proc 1 1
+	sym 1 0 1
+	str 1 0
+	lod 1 0
+	ldc 2 
+	lt
+	fjp $$1
+	lod 1 0
+	ldc 1 
+	sub
+	retv
+	ujp $$0
+$$1	nop
+	ldp
+	lod 1 0
+	ldc 1 
+	sub
+	call Fibo
+	ldp
+	lod 1 0
+	ldc 2 
+	sub
+	call Fibo
+	add
+	retv
+$$0	nop
+	ret
+	end
+main	proc 2 1
+	sym 2 0 1
+	ldc 1
+	str 2 0
+$$2	nop
+	lod 2 0
+	ldc 10 
+	lt
+	fjp $$3
+	ldp
+	ldp
+	lod 2 0
+	call Fibo
+	call write
+	lod 2 0
+	inc
+	str 2 0 
+	ujp $$2
+$$3	nop
+	ret
+	end
