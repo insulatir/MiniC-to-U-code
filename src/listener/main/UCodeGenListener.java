@@ -104,7 +104,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		newTexts.put(ctx, program);
 		
 		// 'test.uco' 파일
-		File file = new File("Quicksort.uco");
+		File file = new File("QuickSort.uco");
 		
 		try {
 			FileWriter fw = new FileWriter(file);
@@ -437,8 +437,18 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		else { // Arrays: TODO			*/
 			String varName = ctx.IDENT().getText();
 			VarInfo vInfo = symbolTable.getVarInfo(varName);
+			RuleContext fun = ctx;
+			while (!(fun instanceof MiniCParser.Fun_declContext)) {
+				fun = fun.parent;
+			}
+			String fname = fun.getChild(1).getText();
+			FInfo fInfo = symbolTable.getFunInfo(fname);
 			expr = newTexts.get(ctx.expr(0));
-			expr += "\t" + "lda " +  vInfo.block + " " + vInfo.id + "\n";
+			if (fInfo.hasArray) {
+				expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + "\n";
+			} else {
+				expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+			}
 			expr += "\t" + "add" + "\n";
 			expr += newTexts.get(ctx.expr(1));
 			expr += "\t" + "sti" + "\n";
