@@ -16,7 +16,7 @@ Swap	proc 1 4
 	ldi
 	str 1 3 
 	lod 1 1
-	lda 1 0
+	lod 1 0
 	add
 	lod 1 2
 	lod 1 0
@@ -24,7 +24,7 @@ Swap	proc 1 4
 	ldi
 	sti
 	lod 1 2
-	lda 1 0
+	lod 1 0
 	add
 	lod 1 3
 	sti
@@ -54,7 +54,7 @@ Partition	proc 2 6
 $$6	nop
 	lod 2 4
 	lod 2 5
-	ge
+	le
 	fjp $$7
 $$0	nop
 	lod 2 3
@@ -62,7 +62,11 @@ $$0	nop
 	lod 2 0
 	add
 	ldi
-	gt
+	ge
+	lod 2 4
+	lod 2 2
+	le
+	and
 	fjp $$1
 	lod 2 4
 	inc
@@ -75,7 +79,13 @@ $$2	nop
 	lod 2 0
 	add
 	ldi
-	lt
+	le
+	lod 2 5
+	lod 2 1
+	ldc 1 
+	add
+	ge
+	and
 	fjp $$3
 	lod 2 5
 	dec
@@ -84,10 +94,10 @@ $$2	nop
 $$3	nop
 	lod 2 4
 	lod 2 5
-	ge
+	le
 	fjp $$4
 	ldp
-	lod 2 0
+	lod1 2 0
 	lod 2 4
 	lod 2 5
 	call Swap
@@ -95,7 +105,7 @@ $$4	nop
 	ujp $$6
 $$7	nop
 	ldp
-	lod 2 0
+	lod1 2 0
 	lod 2 1
 	lod 2 5
 	call Swap
@@ -111,24 +121,24 @@ QuickSort	proc 3 4
 	str 3 0
 	lod 3 1
 	lod 3 2
-	ge
+	le
 	fjp $$8
 	sym 3 3 1
 	ldp
-	lod 3 0
+	lod1 3 0
 	lod 3 1
 	lod 3 2
 	call Partition
 	str 3 3 
 	ldp
-	lod 3 0
+	lod1 3 0
 	lod 3 1
 	lod 3 3
 	ldc 1 
 	sub
 	call QuickSort
 	ldp
-	lod 3 0
+	lod1 3 0
 	lod 3 3
 	ldc 1 
 	add
@@ -146,7 +156,7 @@ main	proc 4 103
 	str 4 101 
 	ldp
 	lod 4 100
-	call write
+	call read
 $$10	nop
 	lod 4 100
 	ldc 0 
@@ -162,7 +172,7 @@ $$10	nop
 	str 4 101 
 	ldp
 	lod 4 100
-	call write
+	call read
 	ujp $$10
 $$11	nop
 	lod 4 101
