@@ -104,7 +104,7 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 		newTexts.put(ctx, program);
 		
 		// 'test.uco' 파일
-		File file = new File("QuickSort.uco");
+		File file = new File("test.uco");
 		
 		try {
 			FileWriter fw = new FileWriter(file);
