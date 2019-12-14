@@ -376,7 +376,20 @@ public class UCodeGenListener extends MiniCBaseListener implements ParseTreeList
 				if (vInfo.type == Type.INT) {
 					expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + "\n";
 				} else {
-					expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+					// 함수 인자에 배열 타입이 있는지 확인
+					RuleContext fun = ctx;
+					while (!(fun instanceof MiniCParser.Fun_declContext)) {
+						fun = fun.parent;
+					}
+					
+					String fname = fun.getChild(1).getText();
+					FInfo fInfo = symbolTable.getFunInfo(fname);
+					
+					if (fInfo.hasArray) {
+						expr += "\t" + "lod " + vInfo.block + " " + vInfo.id + "\n";
+					} else {
+						expr += "\t" + "lda " + vInfo.block + " " + vInfo.id + "\n";
+					}
  				}
 				//else	// Type int array => Later! skip now..
 				//	expr += "           lda " + symbolTable.get(ctx.IDENT().getText()).value + " \n";
