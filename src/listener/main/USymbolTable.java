@@ -64,7 +64,6 @@ public class USymbolTable {
 		// 함수 집입마다 블럭 번호 증가
 		_block++;
 		_localVarID = 0;
-		_labelID = 0;
 		_tempVarID = 32;		
 	}
 	
