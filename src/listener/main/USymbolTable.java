@@ -136,6 +136,10 @@ public class USymbolTable {
 			String pname = getParamName(params.param(i));
 			// 인자 타입
 			Type type = Type.valueOf(params.param(i).type_spec().getText().toUpperCase());
+			// 배열 타입
+			if (isArrayParamDecl(params.param(i))) {
+				type = Type.valueOf("INTARRAY");
+			}
 			// 지역변수테이블에 인자 이름, 인자 타입을 쌍으로 하여 추가
 			putLocalVar(pname, type);
 		}
