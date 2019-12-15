@@ -49,18 +49,6 @@ public class UCodeGenListenerHelper {
 	static boolean isDeclWithInit(Local_declContext ctx) {
 		return ctx.getChildCount() == 5 ;
 	}
-	// return type of function is void
-	static boolean isVoidF(Fun_declContext ctx) {
-		return ctx.type_spec().getText().equals("VOID");
-	}
-	// return_stmt : RETURN ';'
-	static boolean isIntReturn(MiniCParser.Return_stmtContext ctx) {
-		return ctx.getChildCount() == 3;
-	}
-	// return_stmt : RETURN expr ';'
-	static boolean isVoidReturn(MiniCParser.Return_stmtContext ctx) {
-		return ctx.getChildCount() == 2;
-	}
 	
 	// params
 	static String getParamName(ParamContext param) {
@@ -89,11 +77,6 @@ public class UCodeGenListenerHelper {
 	static boolean noElse(If_stmtContext ctx) {
 		// 자식의 수가 5개 이하이면 else가 없는 if문
 		return ctx.getChildCount() <= 5;
-	}
-	
-	static String getCurrentClassName() {
-		// 현재 클래스 이름
-		return "Test";
 	}
 	
 	static String noReturn(Fun_declContext ctx) {
